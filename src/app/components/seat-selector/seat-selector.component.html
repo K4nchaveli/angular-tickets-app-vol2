@@ -1,0 +1,13 @@
+<p>seat-selector works!</p>
+
+<div class="seats">
+    <button
+      *ngFor="let seat of seats"
+      (click)="selectSeat(seat)"
+      [disabled]="!seat.isAvailable"
+      [class.selected]="seat.selected"
+    >
+      {{ seat.seatNumber }}
+    </button>
+  </div>
+  

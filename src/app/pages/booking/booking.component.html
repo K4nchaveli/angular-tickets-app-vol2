@@ -1,0 +1,25 @@
+<p>booking works!</p>
+
+
+<div *ngIf="vagonData">
+    <h2>ვაგონის ინფორმაცია</h2>
+  
+    <div *ngFor="let vagon of vagonData" class="vagon-card">
+      <h3>{{ vagon.type }}</h3>
+      <p>სულ ადგილები: {{ vagon.totalSeats }}</p>
+      <p>თავისუფალი ადგილები: {{ vagon.availableSeats }}</p>
+  
+      <button (click)="selectVagon(vagon)">აირჩიე ადგილი</button>
+    </div>
+  </div>
+  
+  <div *ngIf="!vagonData">
+    <p>იტვირთება ვაგონის მონაცემები...</p>
+  </div>
+  
+  <h2>აირჩიეთ ადგილი:</h2>
+
+<app-seat-selector
+  [seats]="seats"
+  (seatSelected)="onSeatSelected($event)"
+></app-seat-selector>

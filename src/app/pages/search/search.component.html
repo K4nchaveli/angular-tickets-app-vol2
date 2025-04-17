@@ -1,0 +1,52 @@
+
+<form (ngSubmit)="onSearch()">
+    <label>საიდან:
+      <select [(ngModel)]="from" name="from" required>
+        <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+      </select>
+    </label>
+  
+    <label>სად:
+      <select [(ngModel)]="to" name="to" required>
+        <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+      </select>
+    </label>
+  
+    <label>თარიღი:
+      <input type="date" [(ngModel)]="date" name="date" required />
+    </label>
+  
+    <label>მგზავრები:
+      <input type="number" [(ngModel)]="passengers" name="passengers" min="1" />
+    </label>
+  
+    <button type="submit">ძებნა</button>
+  </form>
+  
+  <hr />
+  
+  <div *ngIf="trains.length > 0">
+    <h3>ნაპოვნი განრიგები:</h3>
+    <div *ngFor="let train of trains" class="train-card">
+      <p>მატარებლის № {{ train.number }}</p>
+      <p>{{ train.from }} → {{ train.to }}</p>
+      <p>გასვლის დრო: {{ train.departure }}</p>
+      <p>ჩასვლის დრო: {{ train.arrive }}</p>
+      <button [routerLink]="'/booking/' + train.id">აირჩიე</button>
+
+    </div>
+  </div>
+  
+  <!-- <div *ngIf="trains.length == 0 && from  && to && date && passengers">
+    <p>არჩეული განრიგი ვერ მოიძებნა</p>
+  </div> -->
+
+  <div *ngFor="let train of trains">
+    <div *ngFor="let vagon of train.vagons">
+      <button [routerLink]="['/booking']" [queryParams]="{ wagonId: vagon.id }">
+        აირჩიე ადგილი
+      </button>
+    </div>
+  </div>
+  
+  

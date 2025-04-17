@@ -1,0 +1,21 @@
+
+
+.site-header {
+    background: rgba(28, 28, 224, 0.836);
+    color: white;
+    padding: 1rem;
+  }
+  nav {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  
