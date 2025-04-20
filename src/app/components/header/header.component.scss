@@ -1,21 +1,51 @@
 
+.app-header {
+  background: linear-gradient(to right, #0d47a1, #1976d2);
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-.site-header {
-    background: rgba(28, 28, 224, 0.836);
-    color: white;
-    padding: 1rem;
-  }
-  nav {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
   }
-  a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
   }
-  a:hover {
-    text-decoration: underline;
+
+  .nav-links {
+    a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #ffeb3b;
+      }
+    }
   }
-  
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-links {
+    margin-top: 1rem;
+
+    a {
+      display: block;
+      margin: 0.5rem 0;
+    }
+  }
+}

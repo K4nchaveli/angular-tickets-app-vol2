@@ -25,7 +25,7 @@
   
   <hr />
   
-  <div *ngIf="trains.length > 0">
+  <!-- <div *ngIf="trains.length > 0">
     <h3>ნაპოვნი განრიგები:</h3>
     <div *ngFor="let train of trains" class="train-card">
       <p>მატარებლის № {{ train.number }}</p>
@@ -35,18 +35,37 @@
       <button [routerLink]="'/booking/' + train.id">აირჩიე</button>
 
     </div>
+  </div> -->
+
+
+
+  <div *ngIf="trains.length > 0">
+    <h3>ნაპოვნი განრიგები:</h3>
+    <div class="train-list">
+      <div *ngFor="let train of trains" class="train-card">
+        <p class="train-number">მატარებლის № {{ train.number }}</p>
+        <p class="route">{{ train.from }} → {{ train.to }}</p>
+        <p class="departure">გასვლის დრო: {{ train.departure }}</p>
+        <p class="arrival">ჩასვლის დრო: {{ train.arrive }}</p>
+        <button [routerLink]="'/booking/' + train.id">აირჩიე</button>
+      </div>
+    </div>
   </div>
+  
+
+
+
   
   <!-- <div *ngIf="trains.length == 0 && from  && to && date && passengers">
     <p>არჩეული განრიგი ვერ მოიძებნა</p>
   </div> -->
 
-  <div *ngFor="let train of trains">
+  <!-- <div *ngFor="let train of trains">
     <div *ngFor="let vagon of train.vagons">
       <button [routerLink]="['/booking']" [queryParams]="{ wagonId: vagon.id }">
         აირჩიე ადგილი
       </button>
     </div>
-  </div>
+  </div> -->
   
   

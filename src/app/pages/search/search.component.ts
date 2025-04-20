@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit {
   passengers = 1;
   searched = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,) {}
 
   ngOnInit(): void {
     this.fetchStations();
