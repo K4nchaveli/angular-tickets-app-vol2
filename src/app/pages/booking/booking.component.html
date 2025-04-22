@@ -1,84 +1,73 @@
-
-<!-- <div *ngIf="vagonData">
-    <h2>ვაგონის ინფორმაცია</h2>
-  
-    <div *ngFor="let vagon of vagonData" class="vagon-card">
-      <h3>{{ vagon.name }}</h3>
-      <p>სულ ადგილები: {{ vagon.number }}</p>
-      <p>თავისუფალი ადგილები: {{ vagon.isOccupied }}</p>
-  
-      <button (click)="selectVagon(vagon)">აირჩიე ადგილი</button>
-  </div>
-  
-  <div *ngIf="!vagonData">
-    <p>იტვირთება ვაგონის მონაცემები...</p>
-  </div> -->
-  
   
   <h2>ადგილები ყველა ვაგონში:</h2>
 
 <div *ngFor="let vagon of seatsByVagon" class="vagon-block">
   <h3>{{ vagon.vagonName }}</h3>
-  <div class="seats-container">
-    <div 
-      class="seat-card" 
+  <div class="seats-container" >
+    <div class="seat-card" 
       *ngFor="let seat of vagon.seats" 
-      [class.selected]="selectedSeat?.seatId == seat.seatId"
-      (click)="onSeatClick(seat)"
+      [class.occupied]="seat.isOccupied"
+      [class.selected]="selectedSeat?.seatId === seat.seatId"
+      (click)="!seat.isOccupied && onSeatClick(seat)"
     >
       <p>ადგილი: {{ seat.number }}</p>
       <p>ფასი: {{ seat.price }} ₾</p>
-      <p *ngIf="seat.isOccupied" class="occupied">დაკავებულია</p>
+      <p *ngIf="seat.isOccupied" class="occupied">დაიჯავშნა</p>
       <p *ngIf="!seat.isOccupied" class="available">თავისუფალია</p>
     </div>
   </div>
 </div>
 
-
-
-
-
-  <div class="seats-container">
-
-    <div 
-    
-      class="seat-card" 
-      *ngFor="let seat of seats" 
-      [class.selected]="selectedSeat?.seatId == seat.seatId"
-      (click)="onSeatClick(seat)"
-
-    >
-      <p>ადგილი: {{ seat.number }}</p>
-      <p>ფასი: {{ seat.price }} ₾</p>
-      <p *ngIf="seat.isOccupied" class="occupied">დაკავებულია</p>
-      <p *ngIf="!seat.isOccupied" class="available">თავისუფალია</p>
-    </div>
-  </div> 
+<div class="info-container">
+<div *ngIf="selectedSeats">
+  <div class="seat-and-price">
+  <h3>არჩეული ადგილები:</h3>
+  <ul>
+    <li *ngFor="let seat of selectedSeats">
+      №{{ seat.number }} – {{ seat.price }} ₾
+    </li>
+  </ul>
+  <p><strong> საერთო ღირებულება: {{ totalPrice }} ₾</strong></p>
+</div>
+</div>
   
 
-<div class="form-section" *ngIf="selectedSeat">
+<div class="form-section" *ngIf="passengers.length > 0">
     <h3>მგზავრის ინფორმაცია</h3>
-    <form #passengerForm="ngForm">
-      <label>სახელი:</label>
-      <input type="text" [(ngModel)]="passengerFirstName" name="firstName" required />
-
-      <label>გვარი:</label>
-      <input type="text" [(ngModel)]="passengerLastName" name="lastName" required />
-
-      <label>პირადი ნომერი:</label>
-      <input type="text" [(ngModel)]="passengerId" name="personalId" required />
-
-      <label>ტელეფონი:</label>
-      <input type="text" [(ngModel)]="passengerPhone" name="phone" required />
-
-      <label>ელ. ფოსტა:</label>
-      <input type="email" [(ngModel)]="passengerEmail" name="email" required />
-
-      <button type="button" (click)="bookTicket()" [disabled]="!passengerForm.form.valid">
-        ბილეთის დაჯავშნა
-      </button>
-    </form>
+    <div *ngFor="let passenger of passengers; index as i">
+      
+      <form #passengerForm="ngForm">
+        <label>სახელი:</label>
+        <input type="text" [(ngModel)]="passengerFirstName" name="firstName" required />
+  
+        <label>გვარი:</label>
+        <input type="text" [(ngModel)]="passengerLastName" name="lastName" required />
+  
+        <label>პირადი ნომერი:</label>
+        <input type="text" [(ngModel)]="passengerId" name="personalId" required />
+  
+        <label>ტელეფონი:</label>
+        <input type="text" [(ngModel)]="passengerPhone" name="phone" required />
+  
+        <label>ელ. ფოსტა:</label>
+        <input type="email" [(ngModel)]="passengerEmail" name="email" required />
+  
+        <button type="button" class="book-btn" (click)="bookTicket()" [disabled]="!passengerForm.form.valid">
+          ბილეთის დაჯავშნა
+        </button>
+        <button (click)="clearBookedSeats()" class="clear-btn">
+          დაჯავშნილი ადგილების წაშლა
+        </button>
+      </form>
+    </div>
 </div>
+</div>
+
+
+
+
+
+
 
 
   

@@ -1,6 +1,6 @@
 
 interface Seat {
-    placeNumber: number;
+    number: number;
     isAvailable: boolean;
   }
   
