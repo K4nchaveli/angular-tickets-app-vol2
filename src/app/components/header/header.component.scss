@@ -17,6 +17,10 @@
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
+    cursor: pointer;
+    &:hover {
+      color: #ffeb3b;
+    }
   }
 
   .nav-links {
@@ -32,6 +36,14 @@
       }
     }
   }
+}
+
+.active{
+  color: #ffeb3b;
+  font-weight: bold;
+}
+.active2{
+  color: white;
 }
 
 @media (max-width: 768px) {
