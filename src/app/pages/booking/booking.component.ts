@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { BookingService } from '../../services/booking.service';
 import { FormsModule } from '@angular/forms';
+import { TicketService } from '../../services/ticket.service';
 
 
 @Component({
@@ -23,7 +24,9 @@ export class BookingComponent implements OnInit {
   selectedSeats: any[] = [];
   totalPrice: number = 0;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient,private bookingService: BookingService) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient,private bookingService: BookingService,
+    private tktService : TicketService
+  ) {}
 
 
   ngOnInit(): void {
@@ -55,10 +58,10 @@ export class BookingComponent implements OnInit {
     }
   }
   
-  passengers: { name: string }[] = [];
+  people: { name: string }[] = [];
 
 updatePassengerInputs() {
-  this.passengers = this.selectedSeats.map(() => ({ name: '' }));
+  this.people = this.selectedSeats.map(() => ({ name: '' }));
 }
 
   clearBookedSeats(): void {
@@ -195,17 +198,17 @@ bookTicket(): void {
 
   this.selectedSeats.forEach((seat) => {
     const ticketData = {
-      trainId: this.trainId,
+      trainId: Number(this.trainId),
       date: currentDate,
-      phone: this.passengerPhone,
+      phoneNumber: this.passengerPhone,
       email: this.passengerEmail,
-      passenger: {
+      people: [{
         seatId: seat.seatId,
         name: this.passengerFirstName,
         surname: this.passengerLastName,
         idNumber: this.passengerId,
         payoutCompleted: true,
-      },
+      }],
     };
 
 
@@ -227,20 +230,23 @@ bookTicket(): void {
     this.updateSeatStatus();
 
     console.log('არჩეული ადგილები:', this.selectedSeats);
-    console.log('მგზავრები:', this.passengers);
+    console.log('მგზავრები:', this.people);
 
     localStorage.removeItem('selectedSeat');
-
-  this.http.post('https://railway.stepprojects.ge/api/tickets/register', ticketData).subscribe({
-    next: (response: any) => {
-      console.log('წარმატებით დაიჯავშნა:', response);
-      alert('არჩეული ბილეთი წარმატებით დაიჯავშნა!');
-    },
-    error: (err: unknown) => {
-      console.error('დაჯავშნისას მოხდა შეცდომა:', err);
-      alert('დაჯავშნისას მოხდა შეცდომა.');
-    },
+  
+   this.tktService.bookTicket(ticketData).subscribe({
+    next: (resp) => alert(resp),
+    error: (err) => {
+    
+      if (err.error.text) {
+        alert(err.error.text); 
+      } else {
+        alert('მოხდა შეცდომა: ' + err.message);
+      }
+    }
   });
+
+
 });
 }
 

@@ -32,9 +32,9 @@
 </div>
   
 
-<div class="form-section" *ngIf="passengers.length > 0">
+<div class="form-section" *ngIf="people.length > 0">
     <h3>მგზავრის ინფორმაცია</h3>
-    <div *ngFor="let passenger of passengers; index as i">
+    <div *ngFor="let passenger of people; index as i">
       
       <form #passengerForm="ngForm">
         <label>სახელი:</label>
