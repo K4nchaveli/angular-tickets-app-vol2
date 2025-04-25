@@ -98,6 +98,9 @@
 
 
 .info-container {
+  background-image:url(../../../../public/train-1.jpg);
+  background-position: center;
+  background-size: cover;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -106,7 +109,6 @@
   align-items: flex-start;
 
   .seat-and-price {
-    background-color: #ffffff;
     border: 2px solid #4a90e2;
     border-radius: 16px;
     padding: 24px;
@@ -115,6 +117,9 @@
     max-width: 500px;
     height: 330px;
     font-family: "Segoe UI", sans-serif;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+
   
   
     h3 {
@@ -156,13 +161,13 @@
 .form-section {
   flex: 1;
   min-width: 300px;
+
 }
 
 .form-section {
   max-width: 400px;
   height: 300px;
   margin: 40px auto;
-  background-color: rgba(255, 255, 255, 0.95);
   padding: 32px;
   border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -175,7 +180,7 @@
     font-size: 22px;
     margin-bottom: 24px;
     text-align: center;
-    color: #333;
+    color:white;
     font-weight: bold;
   }
 
@@ -187,7 +192,7 @@
     label {
       font-weight: 600;
       font-size: 14px;
-      color: #444;
+      color: white;
     }
 
     input {

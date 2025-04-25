@@ -56,15 +56,18 @@ form {
   
   
 
-  div{
+  .arrange-cont{
+    background-image:url(../../../../public/train-geo-2.jpg);
     .train-card {
-        background-color: #ffffff;
+
+        background-color: rgba(255, 255, 255, 0.5);
         border-radius: 20px;
         padding: 24px;
         margin: 20px auto;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         max-width: 600px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+
       
         &:hover {
           transform: translateY(-4px);
@@ -80,7 +83,9 @@ form {
       
         button {
           margin-top: 16px;
-          background-color: #198754;
+          background-color: rgba(32, 107, 11, 0.8);
+
+          // background-color: #198754;
           color: white;
           border: none;
           padding: 10px 20px;
@@ -185,3 +190,4 @@ form {
     margin-bottom: 24px;
     font-weight: bold;
   }
+

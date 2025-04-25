@@ -77,6 +77,7 @@ updatePassengerInputs() {
       if (willDelete) {
         localStorage.removeItem('bookedSeats');
         localStorage.removeItem('selectedSeat');
+
         swal("წარმატებით წაიშალა!", {
           icon: "success",
         });
@@ -100,7 +101,6 @@ updatePassengerInputs() {
         localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
 
 
-
         this.selectedSeats = [];
         this.totalPrice = 0;
         this.passengerFirstName = '';
@@ -108,13 +108,8 @@ updatePassengerInputs() {
         this.passengerId = '';
         this.passengerPhone = '';
         this.passengerEmail = '';
-
-
       }
     });
-
-
-    
   }
 
 
@@ -200,7 +195,6 @@ updatePassengerInputs() {
   
 
 
-
   onSeatSelected(seat: any) {
     this.selectedSeat = {
       seatId: seat.seatId,
@@ -220,8 +214,6 @@ updatePassengerInputs() {
     });
 
   }
-
-
 
 
 onSeatClick(seat: any) {
@@ -267,8 +259,6 @@ onSeatClick(seat: any) {
 
 
 
-
-
 passengerFirstName: string = '';
 passengerLastName: string = '';
 passengerId: string = '';
@@ -304,7 +294,7 @@ bookTicket(): void {
   if (!this.passengerFirstName || !this.passengerLastName || !this.passengerId || !this.passengerPhone || !this.passengerEmail) {
     swal({
       title: "გთხოვთ შეავსოთ ყველა ველი!",
-      text: "მგზავრის შესახებ ყველა ინფორმაცია აუცილებელია.",
+      text: "ყველა ინფორმაცია აუცილებლად შეავსეთ.",
       icon: "error",
       timer: 2500,
       buttons: false
@@ -331,9 +321,9 @@ bookTicket(): void {
 
 
     seat.isOccupied = true;
-
-    this.selectedSeat.isOccupied = true;
-
+    seat.isSelected = false;
+  
+    this.selectedSeat = null;
     this.selectedSeats = [];
     this.totalPrice = 0;
     this.passengerFirstName = '';
@@ -349,11 +339,11 @@ bookTicket(): void {
     this.updateSeatStatus();
 
     localStorage.removeItem('selectedSeat');
+
   
    this.tktService.bookTicket(ticketData).subscribe({
     next: (resp) => alert(resp),
     error: (err) => {
-    
       if (err.error.text) {
         alert(err.error.text); 
       } else {
@@ -361,8 +351,8 @@ bookTicket(): void {
       }
     }
   });
-
 });
 }
+
 }
 
