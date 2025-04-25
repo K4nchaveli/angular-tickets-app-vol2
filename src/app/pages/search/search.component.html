@@ -34,7 +34,9 @@
         <p class="route">{{ train.from }} → {{ train.to }}</p>
         <p class="departure">გასვლის დრო: {{ train.departure }}</p>
         <p class="arrival">ჩასვლის დრო: {{ train.arrive }}</p>
-        <button [routerLink]="'/booking/' + train.id">აირჩიე</button>
+        <button [routerLink]="['/booking', train.id]">აირჩიე</button>
+
+        <!-- <button [routerLink]="'/booking/' + train.id">აირჩიე</button> -->
       </div>
     </div>
   </div>
