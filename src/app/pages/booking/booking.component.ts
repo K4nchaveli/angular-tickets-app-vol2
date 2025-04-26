@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule,Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { BookingService } from '../../services/booking.service';
@@ -27,7 +27,7 @@ export class BookingComponent implements OnInit {
   totalPrice: number = 0;
 
   constructor(private route: ActivatedRoute, private http: HttpClient,private bookingService: BookingService,
-    private tktService : TicketService
+    private tktService : TicketService,private router: Router,private ticketService: TicketService
   ) {}
 
 
@@ -65,52 +65,6 @@ export class BookingComponent implements OnInit {
 updatePassengerInputs() {
   this.people = this.selectedSeats.map(() => ({ name: '' }));
 }
-
-  clearBookedSeats(): void {
-    swal({
-      title: "დარწმუნებული ხარ?",
-      text: "დაჯავშნილი ადგილები წაიშლება!",
-      icon: "warning",
-      buttons: ["გაუქმება", "დიახ, წაშალე!"],
-      dangerMode: true,
-    }).then((willDelete: boolean) => {
-      if (willDelete) {
-        localStorage.removeItem('bookedSeats');
-        localStorage.removeItem('selectedSeat');
-
-        swal("წარმატებით წაიშალა!", {
-          icon: "success",
-        });
-  
-        this.seats = this.seats.map(seat => ({
-          ...seat,
-          isOccupied: false
-        }));
-        
-        this.seatsByVagon.forEach(vagon => {
-          vagon.seats = vagon.seats.map(seat => ({
-            ...seat,
-            isOccupied: false
-          }));
-        });
-
-        const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats') || '[]');
-        this.selectedSeats.forEach(seat => {
-        bookedSeats.push(seat.seatId);
-        });
-        localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
-
-
-        this.selectedSeats = [];
-        this.totalPrice = 0;
-        this.passengerFirstName = '';
-        this.passengerLastName = '';
-        this.passengerId = '';
-        this.passengerPhone = '';
-        this.passengerEmail = '';
-      }
-    });
-  }
 
 
   seatsByVagon: { vagonId: number, vagonName: string, seats: any[] }[] = [];
@@ -279,6 +233,82 @@ updateSeatStatus(): void {
 
 
 
+// bookTicket(): void {
+//   if (this.selectedSeats.length === 0) {
+//     swal({
+//       title: "გაფრთხილება!",
+//       text: "არცერთი ადგილი არ არის არჩეული!",
+//       icon: "warning",
+//       timer: 2000,
+//       buttons: false
+//     });
+//     return;
+//   }
+
+//   if (!this.passengerFirstName || !this.passengerLastName || !this.passengerId || !this.passengerPhone || !this.passengerEmail) {
+//     swal({
+//       title: "გთხოვთ შეავსოთ ყველა ველი!",
+//       text: "ყველა ინფორმაცია აუცილებლად შეავსეთ.",
+//       icon: "error",
+//       timer: 2500,
+//       buttons: false
+//     });
+//     return;
+//   }
+
+//   const currentDate = new Date().toISOString();
+
+//   this.selectedSeats.forEach((seat) => {
+//     const ticketData = {
+//       trainId: Number(this.trainId),
+//       date: currentDate,
+//       phoneNumber: this.passengerPhone,
+//       email: this.passengerEmail,
+//       people: [{
+//         seatId: seat.seatId,
+//         name: this.passengerFirstName,
+//         surname: this.passengerLastName,
+//         idNumber: this.passengerId,
+//         payoutCompleted: true,
+//       }],
+//     };
+
+
+//     seat.isOccupied = true;
+//     seat.isSelected = false;
+  
+//     this.selectedSeat = null;
+//     this.selectedSeats = [];
+//     this.totalPrice = 0;
+//     this.passengerFirstName = '';
+//     this.passengerLastName = '';
+//     this.passengerId = '';
+//     this.passengerPhone = '';
+//     this.passengerEmail = '';
+
+//     const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats') || '[]');
+//     this.selectedSeats.forEach(seat => bookedSeats.push(seat.seatId));
+//     localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
+
+//     this.updateSeatStatus();
+
+//     localStorage.removeItem('selectedSeat');
+
+  
+//    this.tktService.bookTicket(ticketData).subscribe({
+//     next: (resp) => alert(resp),
+//     error: (err) => {
+//       if (err.error.text) {
+//         alert(err.error.text); 
+//       } else {
+//         alert('მოხდა შეცდომა: ' + err.message);
+//       }
+//     }
+//   });
+// });
+// }
+
+
 bookTicket(): void {
   if (this.selectedSeats.length === 0) {
     swal({
@@ -304,54 +334,96 @@ bookTicket(): void {
 
   const currentDate = new Date().toISOString();
 
-  this.selectedSeats.forEach((seat) => {
-    const ticketData = {
-      trainId: Number(this.trainId),
-      date: currentDate,
-      phoneNumber: this.passengerPhone,
-      email: this.passengerEmail,
-      people: [{
-        seatId: seat.seatId,
-        name: this.passengerFirstName,
-        surname: this.passengerLastName,
-        idNumber: this.passengerId,
-        payoutCompleted: true,
-      }],
-    };
+  const ticketData = {
+    id: Date.now(),
+    trainId: Number(this.trainId),
+    date: currentDate,
+    phoneNumber: this.passengerPhone,
+    email: this.passengerEmail,
+    people: this.selectedSeats.map(seat => ({
+      seatId: seat.seatId,
+      seat: seat.seatNumber,
+      number:seat.number,
+      name: this.passengerFirstName,
+      surname: this.passengerLastName,
+      idNumber: this.passengerId,
+      payoutCompleted: true
+    }))
+  };
 
+  this.tktService.saveTicket(ticketData);
 
+  this.selectedSeats.forEach(seat => {
     seat.isOccupied = true;
     seat.isSelected = false;
-  
-    this.selectedSeat = null;
-    this.selectedSeats = [];
-    this.totalPrice = 0;
-    this.passengerFirstName = '';
-    this.passengerLastName = '';
-    this.passengerId = '';
-    this.passengerPhone = '';
-    this.passengerEmail = '';
+  });
 
-    const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats') || '[]');
-    this.selectedSeats.forEach(seat => bookedSeats.push(seat.seatId));
-    localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
+  this.updateSeatStatus();
 
-    this.updateSeatStatus();
+  this.selectedSeat = null;
+  this.selectedSeats = [];
+  this.totalPrice = 0;
+  this.passengerFirstName = '';
+  this.passengerLastName = '';
+  this.passengerId = '';
+  this.passengerPhone = '';
+  this.passengerEmail = '';
 
-    localStorage.removeItem('selectedSeat');
+  swal({
+    title: "გილოცავთ!",
+    text: "ბილეთი წარმატებით შეიძინეთ!",
+    icon: "success",
+    timer: 2500,
+    buttons: false
+  });
 
-  
-   this.tktService.bookTicket(ticketData).subscribe({
-    next: (resp) => alert(resp),
-    error: (err) => {
-      if (err.error.text) {
-        alert(err.error.text); 
-      } else {
-        alert('მოხდა შეცდომა: ' + err.message);
-      }
+  this.router.navigate(['/tickets']);
+}
+
+clearBookedSeats(): void {
+  swal({
+    title: "დარწმუნებული ხარ?",
+    text: "დაჯავშნილი ადგილები წაიშლება!",
+    icon: "warning",
+    buttons: ["გაუქმება", "დიახ, წაშალე!"],
+    dangerMode: true,
+  }).then((willDelete: boolean) => {
+    if (willDelete) {
+      localStorage.removeItem('bookedSeats');
+      localStorage.removeItem('selectedSeat');
+
+      swal("წარმატებით წაიშალა!", {
+        icon: "success",
+      });
+
+      this.seats = this.seats.map(seat => ({
+        ...seat,
+        isOccupied: false
+      }));
+      
+      this.seatsByVagon.forEach(vagon => {
+        vagon.seats = vagon.seats.map(seat => ({
+          ...seat,
+          isOccupied: false
+        }));
+      });
+
+      const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats') || '[]');
+      this.selectedSeats.forEach(seat => {
+      bookedSeats.push(seat.seatId);
+      });
+      localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
+
+
+      this.selectedSeats = [];
+      this.totalPrice = 0;
+      this.passengerFirstName = '';
+      this.passengerLastName = '';
+      this.passengerId = '';
+      this.passengerPhone = '';
+      this.passengerEmail = '';
     }
   });
-});
 }
 
 }

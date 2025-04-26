@@ -1,0 +1,26 @@
+
+<div class="tickets-container">
+      <h2>ჩემი ბილეთები</h2>
+      
+      <div *ngIf="tickets.length === 0" class="empty-state">
+        ბილეთები ჯერ არ გაქვს შეძენილი.
+      </div>
+    
+      <div class="ticket-card" 
+      *ngFor="let ticket of tickets" 
+      [ngClass]="{ 'deleting': ticket.deleting }">
+   <p><strong>ბილეთის ID:</strong> {{ ticket.id }}</p>
+   <p><strong>თარიღი:</strong> {{ ticket.date | date:'medium' }}</p>
+ 
+   <div class="passenger-info" *ngFor="let person of ticket.people">
+     <p><strong>მგზავრი:</strong> {{ person.name }} {{ person.surname }}</p>
+     <p><strong>ადგილი:</strong> №{{ person.number }}</p>
+   </div>
+ 
+   <button (click)="deleteTicket(ticket.id)" class="delete-button">
+     წაშლა
+   </button>
+ </div>
+
+  </div>
+  
