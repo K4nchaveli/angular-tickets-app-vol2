@@ -26,29 +26,6 @@ export class TicketsComponent implements OnInit{
     });
   }
   
-  // deleteTicket(ticketId: number): void {
-  //   swal({
-  //     title: "დარწმუნებული ხარ?",
-  //     text: "ბილეთი წაიშლება სამუდამოდ!",
-  //     icon: "warning",
-  //     buttons: ["გაუქმება", "დიახ, წაშალე"],
-  //     dangerMode: true,
-  //   }).then((willDelete:any) => {
-  //     if (willDelete) {
-  //       this.ticketService.deleteTicket(ticketId);
-  //       this.tickets = this.tickets.filter(ticket => ticket.id !== ticketId);
-  
-  //       swal({
-  //         title: "წაშლილია!",
-  //         text: "ბილეთი წარმატებით წაიშალა.",
-  //         icon: "success",
-  //         timer: 2000,
-  //         buttons: false
-  //       });
-  //     }
-  //   });
-  // }
-  
 
   deleteTicket(ticketId: number): void {
     swal({

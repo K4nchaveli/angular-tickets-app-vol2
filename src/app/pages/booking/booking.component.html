@@ -1,5 +1,5 @@
   
-  <h2>ადგილები ყველა ვაგონში:</h2>
+<h2>ადგილები ყველა ვაგონში:</h2>
 
 <div *ngFor="let vagon of seatsByVagon" class="vagon-block">
   <h3>{{ vagon.vagonName }}</h3>
@@ -34,42 +34,41 @@
 
 <div class="form-section" *ngIf="people.length > 0">
     <h3>მგზავრის ინფორმაცია</h3>
-    <div *ngFor="let people of people; index as i">
+    <div *ngFor="let person of people; index as i">
       
       <form #passengerForm="ngForm">
         <label>სახელი:</label>
-        <input type="text" [(ngModel)]="passengerFirstName" name="firstName" required />
+        <input type="text" [(ngModel)]="person.firstName" name="firstName{{i}}" required />
   
         <label>გვარი:</label>
-        <input type="text" [(ngModel)]="passengerLastName" name="lastName" required />
+        <input type="text" [(ngModel)]="person.lastName" name="lastName{{i}}" required />
   
         <label>პირადი ნომერი:</label>
-        <input type="text" [(ngModel)]="passengerId" name="personalId" required />
+        <input type="text" [(ngModel)]="person.personalId" name="personalId{{i}}" required pattern="^[0-9]{11}$"
+        maxlength="11"
+        #id="ngModel"/> <div *ngIf="id.invalid && id.touched" class="error">
+          უნდა შედგებოდეს ზუსტად 11 ციფრისგან
+        </div>
   
         <label>ტელეფონი:</label>
-        <input type="text" [(ngModel)]="passengerPhone" name="phone" required />
+        <input type="tel" [(ngModel)]="person.phone" name="phone{{i}}" required pattern="^[0-9]{9,}$"
+        #phone="ngModel" /> <div *ngIf="phone.invalid && phone.touched" class="error">
+          შეიყვანე მხოლოდ ციფრები (მინ. 9 ციფრი)
+        </div>
   
         <label>ელ. ფოსტა:</label>
-        <input type="email" [(ngModel)]="passengerEmail" name="email" required />
+        <input type="email" [(ngModel)]="person.email" name="email{{i}}" required  email
+        #email="ngModel"/> <div *ngIf="email.invalid && email.touched" class="error">
+          შეიყვანე სწორი ელ. ფოსტა
+        </div>
   
-        <button type="button" class="book-btn" (click)="bookTicket()" [disabled]="!passengerForm.form.valid">
+        <button type="button" class="book-btn" (click)="bookTicket(i)" [disabled]="!passengerForm.form.valid">
           ბილეთის დაჯავშნა
         </button>
-        <button (click)="clearBookedSeats()" class="clear-btn">
+        <button (click)="clearBookedSeats(i)" class="clear-btn">
           დაჯავშნილი ადგილების წაშლა
         </button>
       </form>
     </div>
 </div>
 </div>
-
-
-
-
-
-
-
-
-  
-
-

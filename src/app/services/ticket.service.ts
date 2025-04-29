@@ -8,9 +8,6 @@ export class TicketService {
   private bookedSeats: any[] = [];
   constructor(private http: HttpClient) {}
 
-  // bookTicket(data: { userId: string; seatId: number; date: string }) {
-  //   return this.http.post(`${this.apiUrl}/tickets`, data);
-  // }
   bookTicket(data : any) {
     return this.http.post(`https://railway.stepprojects.ge/api/tickets/register`, data);
   }
