@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { TicketService } from "../services/ticket.service";
 import { CommonModule, DatePipe } from "@angular/common";
+import { ApiService } from "../services/api.service";
 declare let swal: any;
 
 @Component({
@@ -13,7 +14,12 @@ declare let swal: any;
 export class TicketsComponent implements OnInit{
   tickets: any[] = [];
 
-  constructor(private ticketService: TicketService) {}
+  selectedFromStation: string = '';
+  selectedToStation: string = '';
+
+
+
+  constructor(private ticketService: TicketService,private apiService: ApiService) {}
 
   ngOnInit(): void {
     this.ticketService.getAllTickets().subscribe({
@@ -26,6 +32,7 @@ export class TicketsComponent implements OnInit{
     });
   }
   
+
 
   deleteTicket(ticketId: number): void {
     swal({
