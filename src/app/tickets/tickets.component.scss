@@ -107,8 +107,7 @@
   .ticket-body {
     padding: 15px 20px;
   }
-
-  // Optional: ticket-like dashed edges
+  
   &::before,
   &::after {
     content: '';

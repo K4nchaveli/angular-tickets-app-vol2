@@ -12,8 +12,6 @@ export class TicketService {
     return this.http.post(`https://railway.stepprojects.ge/api/tickets/register`, data);
   }
 
-
-
   addSeats(seats: any[]) {
     this.bookedSeats.push(...seats);
   }

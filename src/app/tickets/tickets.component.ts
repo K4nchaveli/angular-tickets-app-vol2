@@ -14,12 +14,7 @@ declare let swal: any;
 export class TicketsComponent implements OnInit{
   tickets: any[] = [];
 
-  selectedFromStation: string = '';
-  selectedToStation: string = '';
-
-
-
-  constructor(private ticketService: TicketService,private apiService: ApiService) {}
+  constructor(private ticketService: TicketService) {}
 
   ngOnInit(): void {
     this.ticketService.getAllTickets().subscribe({
@@ -31,8 +26,6 @@ export class TicketsComponent implements OnInit{
       }
     });
   }
-  
-
 
   deleteTicket(ticketId: number): void {
     swal({

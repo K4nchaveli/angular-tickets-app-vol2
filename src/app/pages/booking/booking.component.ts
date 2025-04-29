@@ -38,8 +38,7 @@ export class BookingComponent implements OnInit {
   }> = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient,private bookingService: BookingService,
-    private tktService : TicketService,private router: Router,private ticketService: TicketService
-  ) {}
+    private tktService : TicketService,private router: Router,private ticketService: TicketService) {}
   
 
   ngOnInit(): void {
