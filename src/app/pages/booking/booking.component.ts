@@ -413,7 +413,11 @@ bookTicket(i: number) {
     this.selectedSeat = null;
     this.selectedSeats = [];
     this.totalPrice = 0;
-    this.router.navigate(['/tickets']);
+    // this.router.navigate(['/tickets']);
+
+    setTimeout(() => {
+      this.router.navigate(['/tickets']);
+    }, 2000);
   }
 }
 
