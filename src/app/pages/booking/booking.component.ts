@@ -20,6 +20,9 @@ declare let swal: any;
 export class BookingComponent implements OnInit {
   trainId: string | null = null;
   vagonData: any;
+  selectedVagonClass: string | null = null;
+  vagonClass: string = '';
+
 
   seats: any[] = [];
   selectedSeat:any = null;
@@ -40,9 +43,13 @@ export class BookingComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient,private bookingService: BookingService,
     private tktService : TicketService,private router: Router,private ticketService: TicketService) {}
   
-
   ngOnInit(): void {
     this.trainId = this.route.snapshot.paramMap.get('id');
+
+    this.route.paramMap.subscribe(params => {
+      this.trainId = params.get('trainId');
+      this.selectedVagonClass = params.get('vagonClass');
+    });
   
     const savedSeat = localStorage.getItem('selectedSeat');
     if (savedSeat) {
@@ -244,93 +251,6 @@ updateSeatStatus(): void {
   });
 }
 
-
-
-// bookTicket(i: number) {
-//   const passenger = this.people[i];
-
-//   if (this.selectedSeats.length === 0) {
-//     swal({
-//       title: "გაფრთხილება!",
-//       text: "არცერთი ადგილი არ არის არჩეული!",
-//       icon: "warning",
-//       timer: 2000,
-//       buttons: false
-//     });
-//     return;
-//   }
-
-//   if (!passenger.firstName || !passenger.lastName || !passenger.personalId || !passenger.phone || !passenger.email) {
-//     swal({
-//       title: "გთხოვთ შეავსოთ ყველა ველი!",
-//       text: "ყველა ინფორმაცია აუცილებლად შეავსეთ.",
-//       icon: "error",
-//       timer: 2500,
-//       buttons: false
-//     });
-//     return;
-//   }
-
-//   const currentDate = new Date().toISOString();
-
-//   const ticketData = {
-//     id: Date.now(),
-//     trainId: Number(this.trainId),
-//     date: currentDate,
-//     phoneNumber: passenger.phone,
-//     email: passenger.email,
-//     people: this.selectedSeats.map(seat => ({
-//       seatId: seat.seatId,
-//       seat: seat.seatNumber,
-//       number: seat.number,
-//       name: passenger.firstName,
-//       surname: passenger.lastName,
-//       idNumber: passenger.personalId,
-//       payoutCompleted: true
-//     }))
-//   };
-
-//   this.tktService.saveTicket(ticketData);
-
-//   this.selectedSeats.forEach(seat => {
-//     seat.isOccupied = true;
-//     seat.isSelected = false;
-//   });
-
-//   const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats') || '[]');
-//   this.selectedSeats.forEach(seat => bookedSeats.push(seat.seatId));
-//   localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
-
-//   this.updateSeatStatus();
-
-//   this.selectedSeat = null;
-//   this.selectedSeats = [];
-//   this.totalPrice = 0;
-
-//   this.people[i] = {
-//     firstName: '',
-//     lastName: '',
-//     personalId: '',
-//     phone: '',
-//     email: ''
-//   };
-
-//   localStorage.removeItem('selectedSeat');
-//   localStorage.removeItem('selectedSeats');
-
-//   swal({
-//     title: "ბილეთი დაჯავშნილია!",
-//     text: "გმადლობთ, თქვენი ჯავშანი წარმატებით შესრულდა.",
-//     icon: "success",
-//     timer: 3000,
-//     buttons: false
-//   });
-
-//   this.router.navigate(['/tickets']);
-// }
-
-
-
 bookTicket(i: number) {
   const passenger = this.people[i];
   const seat = this.selectedSeats[i];
@@ -355,8 +275,6 @@ bookTicket(i: number) {
     });
     return;
   }
-
-
 
   const currentDate = new Date().toISOString();
 
@@ -387,7 +305,6 @@ bookTicket(i: number) {
   localStorage.setItem('bookedSeats', JSON.stringify(bookedSeats));
 
   this.updateSeatStatus();
-
   this.selectedSeats[i] = null;
 
   this.people[i] = {
@@ -413,7 +330,6 @@ bookTicket(i: number) {
     this.selectedSeat = null;
     this.selectedSeats = [];
     this.totalPrice = 0;
-    // this.router.navigate(['/tickets']);
 
     setTimeout(() => {
       this.router.navigate(['/tickets']);
@@ -463,5 +379,4 @@ clearBookedSeats(i: number): void {
     }
   });
 }
-
 }

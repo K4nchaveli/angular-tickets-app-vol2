@@ -2,7 +2,7 @@
 <h2>ადგილები ყველა ვაგონში:</h2>
 
 <div *ngFor="let vagon of seatsByVagon" class="vagon-block">
-  <h3>{{ vagon.vagonName }}</h3>
+  <p><strong>კლასი:</strong> {{ selectedVagonClass }}</p>
   <div class="seats-container" >
     <div class="seat-card" 
       *ngFor="let seat of vagon.seats" 

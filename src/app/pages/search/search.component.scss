@@ -51,13 +51,12 @@ form {
     }
   }
   
-  
-
   .arrange-cont{
     height: 600px;
-    background-image:url(../../../../public/train-4.jpg);
-    background-size: cover;
-    background-position: center,center;
+    width: 100%;
+    background-image:url(../../../../public/geo-train.png);
+    background-size:cover;
+    background-position: center;
     background-repeat: no-repeat;
     .train-card {
         background-color: rgba(255, 255, 255, 0.5);
@@ -80,22 +79,45 @@ form {
           color: #333;
           font-weight: 500;
         }
-      
-        button {
-          margin-top: 16px;
-          background-color: rgba(32, 107, 11, 0.8);
+        .vagon-btn-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 15px;
+          justify-content: center;
+          margin-top: 10px;
+        }
+        
+        .vagon-btn {
+          padding: 10px 20px;
+          background-color: #4CAF50;
           color: white;
           border: none;
-          padding: 10px 20px;
-          border-radius: 12px;
+          border-radius: 5px;
           cursor: pointer;
-          font-size: 15px;
-          transition: background-color 0.3s ease;
-      
+          font-size: 16px;
+          transition: background-color 0.3s, transform 0.2s ease-in-out;
+        
           &:hover {
-            background-color: #157347;
+            background-color: #45a049;
+            transform: scale(1.05);
+          }
+        
+          &:active {
+            transform: scale(1);
           }
         }
+        
+        @media (max-width: 768px) {
+          .vagon-btn-list {
+            justify-content: flex-start;
+          }
+        
+          .vagon-btn {
+            width: 100%;
+            margin-bottom: 10px;
+          }
+        }
+        
       }
       
       h3 {
@@ -106,7 +128,6 @@ form {
         margin-bottom: 24px;
       }
 }
-  
 
 .train-list {
     display: grid;

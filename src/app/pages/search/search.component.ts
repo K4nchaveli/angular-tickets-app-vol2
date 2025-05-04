@@ -49,5 +49,17 @@ export class SearchComponent implements OnInit {
       }
     });
   }
+
+
+
+
+
+  logClass(vagonClass: string) {
+    console.log('Class:', vagonClass);
+  }
+
+  logTrainVagons(train: any) {
+    console.log('Train vagons:', train.vagons);
+  }
 }
 

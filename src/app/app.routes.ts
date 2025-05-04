@@ -6,7 +6,8 @@ import { TicketsComponent } from './tickets/tickets.component';
 export const routes: Routes = [
     { path: '', redirectTo: 'search', pathMatch: 'full' },
     { path: 'search', component: SearchComponent,title : 'search' },
-    { path: 'booking/:id', component: BookingComponent,title: 'booking' },
+    // { path: 'booking/:id', component: BookingComponent,title: 'booking' },
+    { path: 'booking/:trainId/:vagonClass', component: BookingComponent,title: 'booking' },
     { path: 'tickets', component: TicketsComponent,title: 'tickets' },
     { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

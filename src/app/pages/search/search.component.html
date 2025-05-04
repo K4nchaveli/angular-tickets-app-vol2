@@ -34,9 +34,17 @@
         <p class="route">{{ train.from }} → {{ train.to }}</p>
         <p class="departure">გასვლის დრო: {{ train.departure }}</p>
         <p class="arrival">ჩასვლის დრო: {{ train.arrive }}</p>
-        <button [routerLink]="['/booking', train.id]">აირჩიე</button>
 
-        <!-- <button [routerLink]="'/booking/' + train.id">აირჩიე</button> -->
+        <div *ngIf="train.vagons?.length > 0" class="vagon-buttons">
+          <p><strong>ვაგონები:</strong></p>
+          <div class="vagon-btn-list">
+            <button *ngFor="let vagon of train.vagons" class="vagon-btn" [routerLink]="['/booking', train.id,vagon.name]"
+            (click)="logTrainVagons(train)">
+              {{ vagon.name }}  {{ vagon.class }}
+            </button>
+          </div>
+        </div>
+         <!-- <button [routerLink]="['/booking', train.id]">აირჩიე</button> -->
       </div>
     </div>
   </div>
