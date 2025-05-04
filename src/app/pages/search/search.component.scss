@@ -8,7 +8,7 @@ form {
     border-radius: 16px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-bottom: 32px;
-  
+    
     label {
       display: flex;
       flex-direction: column;
@@ -28,6 +28,7 @@ form {
   
         &:focus {
           border-color: #0d6efd;
+          box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
           outline: none;
         }
       }
@@ -47,6 +48,7 @@ form {
   
       &:hover {
         background-color: #0b5ed7;
+        transform: scale(1.03)
       }
     }
   }
@@ -54,12 +56,12 @@ form {
   .arrange-cont{
     height: 600px;
     width: 100%;
-    background-image:url(../../../../public/geo-train.png);
+    background-image:url(../../../../public/geo-train-ticket.png);
     background-size:cover;
     background-position: center;
     background-repeat: no-repeat;
     .train-card {
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.3);
         border-radius: 20px;
         padding: 24px;
         margin: 20px auto;
