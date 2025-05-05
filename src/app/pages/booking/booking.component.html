@@ -5,12 +5,13 @@
     <div class="seat-card" 
       *ngFor="let seat of vagon.seats" 
       [class.occupied]="seat.isOccupied"
-      [class.selected]="selectedSeat?.seatId === seat.seatId"
+      [class.selected]="isSeatSelected(seat)"
       (click)="!seat.isOccupied && onSeatClick(seat)"
     >
       <p>ადგილი: {{ seat.number }}</p>
       <p>ფასი: {{ seat.price }} ₾</p>
       <p *ngIf="seat.isOccupied" class="occupied">დაიჯავშნა</p>
+      <p *ngIf="!seat.isOccupied && isSeatSelected(seat)" class="selected-info">არჩეული ადგილი</p>
       <p *ngIf="!seat.isOccupied" class="available">თავისუფალია</p>
     </div>
   </div>
@@ -63,9 +64,9 @@
         <button type="button" class="book-btn" (click)="bookTicket(i)" [disabled]="!passengerForm.form.valid">
           ბილეთის დაჯავშნა
         </button>
-        <button (click)="clearBookedSeats(i)" class="clear-btn">
+        <!-- <button (click)="clearBookedSeats(i)" class="clear-btn">
           დაჯავშნილი ადგილების წაშლა
-        </button>
+        </button> -->
       </form>
     </div>
 </div>

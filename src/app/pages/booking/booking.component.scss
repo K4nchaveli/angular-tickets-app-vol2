@@ -41,25 +41,11 @@
   margin-top: 2rem;
 }
 
-
-
-.occupied {
-  background-color: #f8d7da;
-  color: #721c24;
-  pointer-events: none;
-  opacity: 0.6;
-  border: 1px solid #f5c6cb;
-}
-
-.available {
-  color: green;
-  font-weight: bold;
-}
-
 .vagon-block{
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
   .seats-container {
     display: flex;
     flex-direction: row;
@@ -67,6 +53,7 @@
     overflow-x: auto; 
     gap: 16px;
     padding: 16px;
+
   
     .seat-card {
       display: flex;
@@ -80,17 +67,38 @@
       min-height: 100px;
       cursor: pointer;
       background-color: #4ecaa96d;
-      transition: transform 0.2s, background-color 0.2s;
+      transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
       text-align: center;
+      position: relative;
     
       &:hover {
         transform: scale(1.05);
         background-color: #e6f0ff;
       }
+      &.occupied {
+        background-color: #ccc;
+        color: #777;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
     
       &.selected {
-        background-color: #b3d1ff;
-        border: 2px solid #1e90ff;
+        background-color: #1e90ff;
+        color: white;
+        border: 2px solid #0c6fff;
+        box-shadow: 0 0 10px rgba(30, 144, 255, 0.6);
+      }
+      .occupied {
+        background-color: #f8d7da;
+        color: #721c24;
+        pointer-events: none;
+        opacity: 0.6;
+        border: 1px solid #f5c6cb;
+      }
+      
+      .available {
+        color: green;
+        font-weight: bold;
       }
     }
   }

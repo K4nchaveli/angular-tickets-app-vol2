@@ -117,7 +117,6 @@ updatePassengerInputs() {
               vagonId: vagon.id,
               vagonName: vagon.name,
               seats: vagon.seats,
-              // seats: updatedSeats,
             };
             
           });
@@ -130,7 +129,6 @@ updatePassengerInputs() {
       }
     });
   }
-
 
   selectedVagon: any = null;
 
@@ -168,8 +166,6 @@ updatePassengerInputs() {
     });
   }
   
-
-
   onSeatSelected(seat: any) {
     this.selectedSeat = {
       seatId: seat.seatId,
@@ -190,10 +186,50 @@ updatePassengerInputs() {
 
   }
 
+// onSeatClick(seat: any) {
+//   const index = this.selectedSeats.indexOf(seat);
+
+//   if (seat.isOccupied) {
+//     swal({
+//       title: "ადგილი დაკავებულია!",
+//       text: `ადგილო #${seat.number} უკვე დაჯავშნილია.`,
+//       icon: "error",
+//       timer: 2000,
+//       buttons: false
+//     });
+//     return;
+//   }
+
+//   if (index > -1) {
+//     this.selectedSeats.splice(index, 1);
+//     swal({
+//       title: "ადგილი გაუქმდა",
+//       text: `ადგილი #${seat.number} აღარ არის არჩეული.`,
+//       icon: "warning",
+//       timer: 1500,
+//       buttons: false
+//     });
+//   } else {
+//     this.selectedSeats.push(seat);
+//     swal({
+//       title: "არჩეული ადგილი",
+//       text: `ადგილი #${seat.number} - ფასი: ${seat.price}₾`,
+//       icon: "success",
+//       timer: 1500,
+//       buttons: false
+//     });
+//   }
+
+//   this.selectedSeat = seat;
+//   this.updatePassengerInputs();
+
+//   this.totalPrice = this.selectedSeats.reduce((sum, s) => sum + s.price, 0);
+//   localStorage.setItem('selectedSeats', JSON.stringify(this.selectedSeats));
+// }
+
+
 
 onSeatClick(seat: any) {
-  const index = this.selectedSeats.indexOf(seat);
-
   if (seat.isOccupied) {
     swal({
       title: "ადგილი დაკავებულია!",
@@ -204,6 +240,8 @@ onSeatClick(seat: any) {
     });
     return;
   }
+
+  const index = this.selectedSeats.findIndex(s => s.seatId === seat.seatId);
 
   if (index > -1) {
     this.selectedSeats.splice(index, 1);
@@ -225,21 +263,22 @@ onSeatClick(seat: any) {
     });
   }
 
-  this.selectedSeat = seat;
-  this.updatePassengerInputs();
-
-  this.totalPrice = this.selectedSeats.reduce((sum, s) => sum + s.price, 0);
-  localStorage.setItem('selectedSeats', JSON.stringify(this.selectedSeats));
+    this.totalPrice = this.selectedSeats.reduce((sum, s) => sum + s.price, 0);
+    localStorage.setItem('selectedSeats', JSON.stringify(this.selectedSeats));
+  
+    this.selectedSeat = seat;
+    this.updatePassengerInputs();
 }
 
-
+isSeatSelected(seat: any): boolean {
+  return this.selectedSeats.some(s => s.seatId === seat.seatId);
+}
 
 passengerFirstName: string = '';
 passengerLastName: string = '';
 passengerId: string = '';
 passengerPhone: string = '';
 passengerEmail: string = '';
-
 
 updateSeatStatus(): void {
   this.seatsByVagon.forEach(vagon => {
@@ -275,7 +314,6 @@ bookTicket(i: number) {
     });
     return;
   }
-
   const currentDate = new Date().toISOString();
 
   const ticketData = {
@@ -338,45 +376,46 @@ bookTicket(i: number) {
 }
 
 
-clearBookedSeats(i: number): void {
-  swal({
-    title: "დარწმუნებული ხარ?",
-    text: "დაჯავშნილი ადგილები წაიშლება!",
-    icon: "warning",
-    buttons: ["გაუქმება", "დიახ, წაშალე!"],
-    dangerMode: true,
-  }).then((willDelete: boolean) => {
-    if (willDelete) {
-      localStorage.removeItem('bookedSeats');
-      localStorage.removeItem('selectedSeat');
+// clearBookedSeats(i: number): void {
+//   swal({
+//     title: "დარწმუნებული ხარ?",
+//     text: "დაჯავშნილი ადგილები წაიშლება!",
+//     icon: "warning",
+//     buttons: ["გაუქმება", "დიახ, წაშალე!"],
+//     dangerMode: true,
+//   }).then((willDelete: boolean) => {
+//     if (willDelete) {
+//       localStorage.removeItem('bookedSeats');
+//       localStorage.removeItem('selectedSeat');
 
-      swal("წარმატებით წაიშალა!", {
-        icon: "success",
-      });
+//       swal("წარმატებით წაიშალა!", {
+//         icon: "success",
+//       });
 
-      this.seats = this.seats.map(seat => ({
-        ...seat,
-        isOccupied: false
-      }));
+//       this.seats = this.seats.map(seat => ({
+//         ...seat,
+//         isOccupied: false
+//       }));
       
-      this.seatsByVagon.forEach(vagon => {
-        vagon.seats = vagon.seats.map(seat => ({
-          ...seat,
-          isOccupied: false
-        }));
-      });
+//       this.seatsByVagon.forEach(vagon => {
+//         vagon.seats = vagon.seats.map(seat => ({
+//           ...seat,
+//           isOccupied: false
+//         }));
+//       });
 
-      this.selectedSeat = null;
-      this.selectedSeats = [];
-      this.totalPrice = 0;
-      this.people[i] = {
-        firstName: '',
-        lastName: '',
-        personalId: '',
-        phone: '',
-        email: ''
-      };
-    }
-  });
-}
+//       this.selectedSeat = null;
+//       this.selectedSeats = [];
+//       this.totalPrice = 0;
+//       this.people[i] = {
+//         firstName: '',
+//         lastName: '',
+//         personalId: '',
+//         phone: '',
+//         email: ''
+//       };
+//     }
+//   });
+// }
+
 }

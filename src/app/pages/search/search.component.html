@@ -36,7 +36,6 @@
         <p class="arrival">ჩასვლის დრო: {{ train.arrive }}</p>
 
         <div *ngIf="train.vagons?.length > 0" class="vagon-buttons">
-          <p><strong>ვაგონები:</strong></p>
           <div class="vagon-btn-list">
             <button *ngFor="let vagon of train.vagons" class="vagon-btn" [routerLink]="['/booking', train.id,vagon.name]"
             (click)="logTrainVagons(train)">
@@ -44,7 +43,6 @@
             </button>
           </div>
         </div>
-         <!-- <button [routerLink]="['/booking', train.id]">აირჩიე</button> -->
       </div>
     </div>
   </div>
