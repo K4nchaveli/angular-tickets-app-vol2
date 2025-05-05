@@ -54,7 +54,7 @@ export class BookingComponent implements OnInit {
     const savedSeat = localStorage.getItem('selectedSeat');
     if (savedSeat) {
       this.selectedSeat = JSON.parse(savedSeat);
-      console.log('შენახული არჩეული ადგილი localStorage-დან:', this.selectedSeat);
+      // console.log('შენახული არჩეული ადგილი localStorage-დან:', this.selectedSeat);
     }
   
     const bookedSeats = JSON.parse(localStorage.getItem('bookedSeats') || '[]');
@@ -178,7 +178,7 @@ updatePassengerInputs() {
 
     swal({
       title: "ადგილი არჩეულია",
-      text: `ადგილო #${seat.number} - ფასი: ${seat.price}₾`,
+      text: `ადგილი #${seat.number} - ფასი: ${seat.price}₾`,
       icon: "success",
       timer: 2000,
       buttons: false
@@ -233,7 +233,7 @@ onSeatClick(seat: any) {
   if (seat.isOccupied) {
     swal({
       title: "ადგილი დაკავებულია!",
-      text: `ადგილო #${seat.number} უკვე დაჯავშნილია.`,
+      text: `ადგილი #${seat.number} უკვე დაჯავშნილია.`,
       icon: "error",
       timer: 2000,
       buttons: false
