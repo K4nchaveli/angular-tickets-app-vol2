@@ -1,4 +1,5 @@
 
+
 .app-header {
   background: linear-gradient(to right, #0d47a1, #1976d2);
   color: white;
@@ -12,6 +13,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
   .logo {
@@ -24,6 +27,9 @@
   }
 
   .nav-links {
+    display: flex;
+    align-items: center;
+
     a {
       color: white;
       text-decoration: none;
@@ -36,23 +42,62 @@
       }
     }
   }
+
+  .theme-toggle {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #e0e0e0;
+    color: #333;
+
+    &:hover {
+      background-color: #c5c5c5;
+    }
+  }
 }
 
-.active{
+body.dark .app-header {
+  background: linear-gradient(to right, #1a1a1a, #333);
+  color: white;
+
+  .nav-links a {
+    color: #f5f5f5;
+
+    &:hover {
+      color: #ffd54f;
+    }
+  }
+
+  .theme-toggle {
+    background-color: #2e2e2e;
+    color: #f5f5f5;
+
+    &:hover {
+      background-color: #444;
+    }
+  }
+}
+
+.active {
   color: #ffeb3b;
   font-weight: bold;
 }
-.active2{
+.active2 {
   color: white;
 }
 
 @media (max-width: 768px) {
-  .container {
+  .app-header .container {
     flex-direction: column;
     text-align: center;
   }
 
   .nav-links {
+    flex-direction: column;
     margin-top: 1rem;
 
     a {
@@ -60,6 +105,8 @@
       margin: 0.5rem 0;
     }
   }
+
+  .theme-toggle {
+    margin-top: 0.5rem;
+  }
 }
-
-

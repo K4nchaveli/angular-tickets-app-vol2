@@ -186,49 +186,6 @@ updatePassengerInputs() {
 
   }
 
-// onSeatClick(seat: any) {
-//   const index = this.selectedSeats.indexOf(seat);
-
-//   if (seat.isOccupied) {
-//     swal({
-//       title: "ადგილი დაკავებულია!",
-//       text: `ადგილო #${seat.number} უკვე დაჯავშნილია.`,
-//       icon: "error",
-//       timer: 2000,
-//       buttons: false
-//     });
-//     return;
-//   }
-
-//   if (index > -1) {
-//     this.selectedSeats.splice(index, 1);
-//     swal({
-//       title: "ადგილი გაუქმდა",
-//       text: `ადგილი #${seat.number} აღარ არის არჩეული.`,
-//       icon: "warning",
-//       timer: 1500,
-//       buttons: false
-//     });
-//   } else {
-//     this.selectedSeats.push(seat);
-//     swal({
-//       title: "არჩეული ადგილი",
-//       text: `ადგილი #${seat.number} - ფასი: ${seat.price}₾`,
-//       icon: "success",
-//       timer: 1500,
-//       buttons: false
-//     });
-//   }
-
-//   this.selectedSeat = seat;
-//   this.updatePassengerInputs();
-
-//   this.totalPrice = this.selectedSeats.reduce((sum, s) => sum + s.price, 0);
-//   localStorage.setItem('selectedSeats', JSON.stringify(this.selectedSeats));
-// }
-
-
-
 onSeatClick(seat: any) {
   if (seat.isOccupied) {
     swal({

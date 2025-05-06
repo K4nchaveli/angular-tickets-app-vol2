@@ -8,5 +8,9 @@
       <a routerLink="/tickets">ჩემი ბილეთები</a>
       <a routerLink="/search" [routerLinkActive]="active">მოძებნე მატარებელი</a>
     </nav>
+    
+    <button class="theme-toggle" (click)="toggleTheme()">
+      {{isDark() ? '☀️ ღია ფონი' : '🌙 მუქი ფონი'}}
+    </button>
   </div>
 </header>
